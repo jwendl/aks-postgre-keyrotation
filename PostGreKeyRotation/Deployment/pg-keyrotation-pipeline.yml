@@ -27,7 +27,7 @@ stages:
         scriptLocation: 'scriptPath'
         scriptPath: '$(System.DefaultWorkingDirectory)/PostGreKeyRotation/Deployment/scripts/pg-rotate-keys.sh'
         workingDirectory: '$(System.DefaultWorkingDirectory)/PostGreKeyRotation/Deployment/scripts'
-        arguments: '"$(currentActiveRole)"'
+        arguments: '"$(currentActiveRole)" "<database-server-name>" "<database-name>" "<database-admin-role>"'
 
 - stage: DeployStaging
   dependsOn:
@@ -62,7 +62,7 @@ stages:
         scriptLocation: 'scriptPath'
         scriptPath: '$(System.DefaultWorkingDirectory)/PostGreKeyRotation/Deployment/scripts/pg-deploy-staging.sh'
         workingDirectory: '$(System.DefaultWorkingDirectory)/PostGreKeyRotation/Deployment/scripts'
-        arguments: '"$(currentActiveRole)" "$(buildTag)"'
+        arguments: '"$(currentActiveRole)" "$(buildTag)" "<database-server-name>" "<database-name>"'
 
 - stage: IntegrationTest
   dependsOn:
@@ -151,7 +151,7 @@ stages:
         scriptLocation: 'scriptPath'
         scriptPath: '$(System.DefaultWorkingDirectory)/PostGreKeyRotation/Deployment/scripts/pg-deploy-production.sh'
         workingDirectory: '$(System.DefaultWorkingDirectory)/PostGreKeyRotation/Deployment/scripts'
-        arguments: '"$(currentActiveRole)" "$(buildTag)"'
+        arguments: '"$(currentActiveRole)" "$(buildTag)" "<database-server-name>" "<database-name>"'
 
     - task: Bash@3
       displayName: 'Installing PostgreSQL client'
@@ -168,7 +168,7 @@ stages:
         failOnStderr: true
         filePath: '$(System.DefaultWorkingDirectory)/PostGreKeyRotation/Deployment/scripts/pg-swap-active.sh'
         workingDirectory: '$(System.DefaultWorkingDirectory)/PostGreKeyRotation/Deployment/scripts'
-        arguments: '"$(currentActiveRole)"'
+        arguments: '"$(currentActiveRole)" "<database-server-name>" "<database-name>" "<database-admin-role>"'
 
     - task: Bash@3
       displayName: 'Set currentActiveRole variable'

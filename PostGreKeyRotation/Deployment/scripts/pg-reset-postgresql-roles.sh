@@ -1,8 +1,9 @@
 #!/bin/bash
 
-PGSERVER=${PGSERVER:-"<database-server-name>"}
-PGDB=${PGDB:-"<database-name>"}
-PGUSER=${PGUSER:-"<database-admin-role>@<database-server-name>"}
+DBHOSTNAME=$1
+DBNAME=$2
+DBADMINROLE=$3
+
 
 export PGPASSWORD="MyB@dP2\$\$wd"
 
@@ -17,7 +18,7 @@ echo "psql output:"
 echo "------------------------------------------"
 echo ""
 
-psql "sslmode=require host=${PGSERVER} dbname=${PGDB} user=${PGUSER}" -c "${SQL}"
+psql "sslmode=require host=${DBHOSTNAME} dbname=${DBNAME} user=${DBADMINROLE}" -c "${SQL}"
 
 echo ""
 echo "------------------------------------------"
@@ -33,7 +34,7 @@ echo "psql output:"
 echo "------------------------------------------"
 echo ""
 
-psql "sslmode=require host=${PGSERVER} dbname=${PGDB} user=${PGUSER}" -c "${SQL}"
+psql "sslmode=require host=${DBHOSTNAME} dbname=${DBNAME} user=${DBADMINROLE}" -c "${SQL}"
 
 echo ""
 echo "------------------------------------------"

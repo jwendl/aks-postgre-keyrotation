@@ -2,6 +2,8 @@
 
 ACTIVEROLE=$1
 BUILDTAG=$2
+DBHOSTNAME=$3
+DBNAME=$4
 
 if [ -z "${ACTIVEROLE}" ]; then
     echo "Usage:  $0 <active role>"
@@ -9,9 +11,6 @@ if [ -z "${ACTIVEROLE}" ]; then
 else
     echo "ACTIVEROLE: ${ACTIVEROLE}"
     echo "BUILDTAG: ${BUILDTAG}"
-
-    DBHOSTNAME="<database-server-name>"
-    DBNAME="<database-name>"
 
     echo "DBHOSTNAME: ${DBHOSTNAME}"
     echo "DBNAME: ${DBNAME}"

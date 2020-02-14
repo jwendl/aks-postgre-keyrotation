@@ -22,6 +22,7 @@ stages:
           failOnStderr: true
           filePath: '$(System.DefaultWorkingDirectory)/PostGreKeyRotation/Deployment/scripts/pg-reset-postgresql-roles.sh'
           workingDirectory: '$(System.DefaultWorkingDirectory)/PostGreKeyRotation/Deployment/scripts'
+          arguments: '"<database-server-name>" "<database-name>" "<database-admin-role>"'
 
 - stage: ResetKeyvault
   dependsOn:

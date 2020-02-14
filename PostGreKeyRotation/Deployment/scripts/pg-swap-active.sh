@@ -1,16 +1,15 @@
 #!/bin/bash
 
 ACTIVEROLE=$1
+DBHOSTNAME=$2
+DBNAME=$3
+DBADMINROLE=$4
 
 if [ -z "${ACTIVEROLE}" ]; then
     echo "Usage:  $0 <active role>"
     exit 1;
 else
     echo "ACTIVEROLE: ${ACTIVEROLE}"
-
-    PGSERVER=${PGSERVER:-"<database-server-name>"}
-    PGDB=${PGDB:-"<database-name>"}
-    PGUSER=${PGUSER:-"<database-admin-role>@<database-server-name>"}
 
     export PGPASSWORD="MyB@dP2\$\$wd"
 
@@ -24,7 +23,7 @@ else
     echo "------------------------------------------"
     echo ""
 
-    psql "sslmode=require host=${PGSERVER} dbname=${PGDB} user=${PGUSER}" -c "${SQL}"
+    psql "sslmode=require host=${DBHOSTNAME} dbname=${DBNAME} user=${DBADMINROLE}" -c "${SQL}"
 
     echo ""
 fi

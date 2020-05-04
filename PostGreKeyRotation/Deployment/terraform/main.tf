@@ -1,3 +1,6 @@
+# // Copyright (c) Microsoft Corporation.
+# // Licensed under the MIT license.
+
 resource "azurerm_resource_group" "key_rotate" {
   name     = var.key_vault_resource_group_name
   location = var.key_vault_location

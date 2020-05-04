@@ -1,3 +1,5 @@
+-- // Copyright (c) Microsoft Corporation.
+-- // Licensed under the MIT license.
 CREATE TABLE IF NOT EXISTS testdata (
     Id          SERIAL          PRIMARY KEY NOT NULL,
     FirstName   VARCHAR(255)    NOT NULL,

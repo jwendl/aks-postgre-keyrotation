@@ -1,4 +1,7 @@
-﻿namespace PostGreKeyRotation.Models
+﻿// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
+namespace PostgreKeyRotation.Models
 {
     public class SimpleUser
     {

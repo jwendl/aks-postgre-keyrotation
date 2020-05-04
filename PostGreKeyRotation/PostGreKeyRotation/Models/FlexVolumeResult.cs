@@ -1,6 +1,9 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
-namespace PostGreKeyRotation.Models
+using System;
+
+namespace PostgreKeyRotation.Models
 {
     public class FlexVolumeResult
     {

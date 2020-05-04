@@ -5,7 +5,7 @@ Here are some useful example ways to run this application inside a docker contai
 ## Building the Container
 
 ``` bash
-docker build -t postgrekeyrotation:v1 ../../PostGreKeyRotation
+docker build -t postgrekeyrotation:v1 ../../PostgreKeyRotation
 ```
 
 ## Getting the Logs from the Application

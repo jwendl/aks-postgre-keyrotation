@@ -1,3 +1,5 @@
+# // Copyright (c) Microsoft Corporation.
+# // Licensed under the MIT license.
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:

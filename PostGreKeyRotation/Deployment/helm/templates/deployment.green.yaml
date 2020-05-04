@@ -1,3 +1,5 @@
+# // Copyright (c) Microsoft Corporation.
+# // Licensed under the MIT license.
 {{ if .Values.green.enabled }}
 apiVersion: apps/v1
 kind: Deployment

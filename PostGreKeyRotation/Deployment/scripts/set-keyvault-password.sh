@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# // Copyright (c) Microsoft Corporation.
+# // Licensed under the MIT license.
+
 existingBlueValue=$(az keyvault secret show --id https://<kv uri>/secrets/pgmainbluepwd --vault-name jwrotatekeyvault)
 if [ -z "$existingBlueValue" ]
 then

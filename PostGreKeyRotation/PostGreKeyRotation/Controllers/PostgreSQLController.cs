@@ -1,14 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Npgsql;
-using PostGreKeyRotation.Models;
+using PostgreKeyRotation.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace PostGreKeyRotation.Controllers
+namespace PostgreKeyRotation.Controllers
 {
     [ApiController]
     [Route("[controller]")]
@@ -37,10 +40,10 @@ namespace PostGreKeyRotation.Controllers
                 if (mountFileInfo.Exists)
                 {
                     using var textReader = mountFileInfo.OpenText();
-                    pwd = await textReader.ReadToEndAsync();
+                    pwd = await textReader.ReadToEndAsync().ConfigureAwait(false);
                     connectionString = postgreSQLControllerConfig.ConnectionStringTemplate
-                        .Replace("{RoleName}", postgreSQLControllerConfig.ConnectionStringRoleName)
-                        .Replace("{Pwd}", pwd);
+                        .Replace("{RoleName}", postgreSQLControllerConfig.ConnectionStringRoleName, StringComparison.Ordinal)
+                        .Replace("{Pwd}", pwd, StringComparison.Ordinal);
                 }
                 else
                 {
@@ -62,7 +65,7 @@ namespace PostGreKeyRotation.Controllers
                     SecretMountPoint = postgreSQLControllerConfig.ConnectionStringPwdMountPoint
                 };
 
-                using (var conn = new NpgsqlConnection(await GetConnectionStringAsync()))
+                using (var conn = new NpgsqlConnection(await GetConnectionStringAsync().ConfigureAwait(false)))
                 {
                     result.SecretValue = $"FOR DEMO PURPOSES ONLY, NEVER DO THIS IN PRODUCTION!:  {pwd}";
 

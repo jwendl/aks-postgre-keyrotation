@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# // Copyright (c) Microsoft Corporation.
+# // Licensed under the MIT license.
+
 ACTIVEROLE=$1
 PROJECTURI=$2
 ACCESSTOKEN=$3

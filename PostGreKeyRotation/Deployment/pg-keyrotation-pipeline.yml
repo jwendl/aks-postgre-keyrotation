@@ -1,3 +1,6 @@
+# // Copyright (c) Microsoft Corporation.
+# // Licensed under the MIT license.
+
 trigger:
 - none
 
@@ -25,8 +28,8 @@ stages:
         azureSubscription: '<azure-subscription-id>'
         scriptType: 'bash'
         scriptLocation: 'scriptPath'
-        scriptPath: '$(System.DefaultWorkingDirectory)/PostGreKeyRotation/Deployment/scripts/pg-rotate-keys.sh'
-        workingDirectory: '$(System.DefaultWorkingDirectory)/PostGreKeyRotation/Deployment/scripts'
+        scriptPath: '$(System.DefaultWorkingDirectory)/PostgreKeyRotation/Deployment/scripts/pg-rotate-keys.sh'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/PostgreKeyRotation/Deployment/scripts'
         arguments: '"$(currentActiveRole)" "<database-server-name>" "<database-name>" "<database-admin-role>"'
 
 - stage: DeployStaging
@@ -60,8 +63,8 @@ stages:
         azureSubscription: '<azure-subscription-id>'
         scriptType: 'bash'
         scriptLocation: 'scriptPath'
-        scriptPath: '$(System.DefaultWorkingDirectory)/PostGreKeyRotation/Deployment/scripts/pg-deploy-staging.sh'
-        workingDirectory: '$(System.DefaultWorkingDirectory)/PostGreKeyRotation/Deployment/scripts'
+        scriptPath: '$(System.DefaultWorkingDirectory)/PostgreKeyRotation/Deployment/scripts/pg-deploy-staging.sh'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/PostgreKeyRotation/Deployment/scripts'
         arguments: '"$(currentActiveRole)" "$(buildTag)" "<database-server-name>" "<database-name>"'
 
 - stage: IntegrationTest
@@ -88,7 +91,7 @@ stages:
       inputs:
         command: test
         projects: '**/*.IntegrationTests.csproj'
-        workingDirectory: '$(System.DefaultWorkingDirectory)/PostGreKeyRotation'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/PostgreKeyRotation'
         arguments: '--configuration $(buildConfiguration)'
 
 - stage: WaitForApproval
@@ -149,8 +152,8 @@ stages:
         azureSubscription: '<azure-subscription-id>'
         scriptType: 'bash'
         scriptLocation: 'scriptPath'
-        scriptPath: '$(System.DefaultWorkingDirectory)/PostGreKeyRotation/Deployment/scripts/pg-deploy-production.sh'
-        workingDirectory: '$(System.DefaultWorkingDirectory)/PostGreKeyRotation/Deployment/scripts'
+        scriptPath: '$(System.DefaultWorkingDirectory)/PostgreKeyRotation/Deployment/scripts/pg-deploy-production.sh'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/PostgreKeyRotation/Deployment/scripts'
         arguments: '"$(currentActiveRole)" "$(buildTag)" "<database-server-name>" "<database-name>"'
 
     - task: Bash@3
@@ -160,20 +163,20 @@ stages:
         targetType: 'inline'
         script: |
           sudo apt-get install postgresql-client -y
-        workingDirectory: '$(System.DefaultWorkingDirectory)/PostGreKeyRotation/Deployment/scripts'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/PostgreKeyRotation/Deployment/scripts'
 
     - task: Bash@3
       displayName: 'Disable currentActiveRole and swap'
       inputs:
         failOnStderr: true
-        filePath: '$(System.DefaultWorkingDirectory)/PostGreKeyRotation/Deployment/scripts/pg-swap-active.sh'
-        workingDirectory: '$(System.DefaultWorkingDirectory)/PostGreKeyRotation/Deployment/scripts'
+        filePath: '$(System.DefaultWorkingDirectory)/PostgreKeyRotation/Deployment/scripts/pg-swap-active.sh'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/PostgreKeyRotation/Deployment/scripts'
         arguments: '"$(currentActiveRole)" "<database-server-name>" "<database-name>" "<database-admin-role>"'
 
     - task: Bash@3
       displayName: 'Set currentActiveRole variable'
       inputs:
         failOnStderr: true
-        filePath: '$(System.DefaultWorkingDirectory)/PostGreKeyRotation/Deployment/scripts/pg-set-variable.sh'
-        workingDirectory: '$(System.DefaultWorkingDirectory)/PostGreKeyRotation/Deployment/scripts'
+        filePath: '$(System.DefaultWorkingDirectory)/PostgreKeyRotation/Deployment/scripts/pg-set-variable.sh'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/PostgreKeyRotation/Deployment/scripts'
         arguments: '"$(currentActiveRole)" "$(System.TeamFoundationCollectionUri)$(System.TeamProject)" "$(System.AccessToken)"'

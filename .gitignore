@@ -357,8 +357,8 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
-PostGreKeyRotation/Deployment/ianbe-provider.tfvals
-PostGreKeyRotation/Deployment/ianbe-tf-sp.private
-PostGreKeyRotation/Deployment/foobar.ps1
-PostGreKeyRotation/Deployment/foobar.sh
+PostgreKeyRotation/Deployment/ianbe-provider.tfvals
+PostgreKeyRotation/Deployment/ianbe-tf-sp.private
+PostgreKeyRotation/Deployment/foobar.ps1
+PostgreKeyRotation/Deployment/foobar.sh
 docs/package-lock.json

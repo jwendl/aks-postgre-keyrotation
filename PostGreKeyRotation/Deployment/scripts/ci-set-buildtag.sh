@@ -1,4 +1,6 @@
 #!/bin/bash
+# // Copyright (c) Microsoft Corporation.
+# // Licensed under the MIT license.
 
 BUILDTAG=$1
 PROJECTURI=$2

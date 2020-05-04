@@ -1,3 +1,5 @@
+-- // Copyright (c) Microsoft Corporation.
+-- // Licensed under the MIT license.
 DROP TABLE IF EXISTS testdata;
 CREATE TABLE testdata (
     Id          SERIAL          PRIMARY KEY NOT NULL,

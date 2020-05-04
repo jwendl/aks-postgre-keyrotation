@@ -1,3 +1,5 @@
+# // Copyright (c) Microsoft Corporation.
+# // Licensed under the MIT license.
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:

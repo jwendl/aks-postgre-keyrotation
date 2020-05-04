@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <AssemblyName>PostgreKeyRotation</AssemblyName>
+    <AssemblyName>PostGreKeyRotation</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

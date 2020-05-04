@@ -2,7 +2,7 @@
 
 ## General
 
-This example project demonstrates how to handle secret rotation from a web application running in Azure Kubernetes Service, stores the secrets into KeyVault and then uses those secrets to access Azure PostgreSQL instance. 
+This example project demonstrates how to handle secret rotation from a web application running in Azure Kubernetes Service, stores the secrets into KeyVault and then uses those secrets to access Azure SQL PostGre instance. 
 
 This generally requires changes to be done for the source application, the ability to store the secret in a secure vault and updates on the destination application. This is really tricky to do in a way that requires zero down time.
 
@@ -23,7 +23,7 @@ In this diagram we are showing how Azure Pipelines can be used to orchestrate ea
 1. Application is Live in Production
 1. User will run the KeyRotation pipeline
     1. The pipeline generates a new secret.
-    1. The pipeline then updates Azure PostreSQL by activating the secondary role and changing that role's password.
+    1. The pipeline then updates Azure PostGre SQL by activing the secondary role and changing that role's password.
     1. The pipeline then updates KeyVault's definition of that second password.
     1. The pipeline will then update the source application, in our case it's just rotating one slot with the other slot.
     1. Then integration testing runs to ensure basic end to end functionality.

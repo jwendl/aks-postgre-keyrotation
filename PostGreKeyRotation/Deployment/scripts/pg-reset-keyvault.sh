@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# // Copyright (c) Microsoft Corporation.
-# // Licensed under the MIT license.
-
 KEYVAULTNAME=${KEYVAULTNAME:-"jwrotatekeyvault"}
 
 echo ""

@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# // Copyright (c) Microsoft Corporation.
-# // Licensed under the MIT license.
-
 DBHOSTNAME=$1
 DBNAME=$2
 DBADMINROLE=$3

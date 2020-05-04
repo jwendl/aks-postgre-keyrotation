@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# // Copyright (c) Microsoft Corporation.
-# // Licensed under the MIT license.
-
 ACTIVEROLE=$1
 BUILDTAG=$2
 DBHOSTNAME=$3

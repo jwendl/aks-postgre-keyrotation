@@ -1,9 +1,6 @@
-﻿// Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+﻿using System.Collections.Generic;
 
-using System.Collections.Generic;
-
-namespace PostgreKeyRotation.Models
+namespace PostGreKeyRotation.Models
 {
     public class PostgreSQLConnectResult
     {

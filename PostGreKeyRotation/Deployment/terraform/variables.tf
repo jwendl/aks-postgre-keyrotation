@@ -1,6 +1,3 @@
-# // Copyright (c) Microsoft Corporation.
-# // Licensed under the MIT license.
-
 variable "subscription_id" {
   description = "The subscription id"
 }

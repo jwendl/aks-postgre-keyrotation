@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# // Copyright (c) Microsoft Corporation.
-# // Licensed under the MIT license.
-
 while getopts ":r:n:l:" arg; do
     case $arg in
         r) ResourceGroupName=$OPTARG;;

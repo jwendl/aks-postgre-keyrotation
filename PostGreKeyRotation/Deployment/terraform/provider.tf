@@ -1,6 +1,3 @@
-# // Copyright (c) Microsoft Corporation.
-# // Licensed under the MIT license.
-
 provider "azurerm" {
 	version = "~> 1.4"
 }

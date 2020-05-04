@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# // Copyright (c) Microsoft Corporation.
-# // Licensed under the MIT license.
-
 ACTIVEROLE=$1
 DBHOSTNAME=$2
 DBNAME=$3

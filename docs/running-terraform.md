@@ -1,6 +1,6 @@
 # Running Terraform Locally
 
-First, it's strongly encouraged to have a remote state file storage mechanism. We have a [shell script](https://github.com/jwendl/aks-postgre-keyrotation/raw/master/PostgreKeyRotation/Deployment/terraform/add-tf-storage.sh) inside the terraform folder that helps with this.
+First, it's strongly encouraged to have a remote state file storage mechanism. We have a [shell script](https://github.com/jwendl/aks-postgre-keyrotation/raw/master/PostGreKeyRotation/Deployment/terraform/add-tf-storage.sh) inside the terraform folder that helps with this.
 
 It can be run by using the command
 

@@ -1,14 +1,11 @@
-// Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
-
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using PostgreKeyRotation.Models;
+using PostGreKeyRotation.Models;
 
-namespace PostgreKeyRotation
+namespace PostGreKeyRotation
 {
     public class Startup
     {

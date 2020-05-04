@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "PostgreKeyRotation": {
+    "PostGreKeyRotation": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "readflexvolume",

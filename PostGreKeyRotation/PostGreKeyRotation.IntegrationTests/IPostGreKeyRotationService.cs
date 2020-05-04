@@ -1,13 +1,10 @@
-﻿// Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
-
-using PostgreKeyRotation.Models;
+﻿using PostGreKeyRotation.Models;
 using Refit;
 using System.Threading.Tasks;
 
-namespace PostgreKeyRotation.IntegrationTests
+namespace PostGreKeyRotation.IntegrationTests
 {
-    public interface IPostgreKeyRotationService
+    public interface IPostGreKeyRotationService
     {
         [Get("/postgresql/")]
         Task<PostgreSQLConnectResult> GetResultAsync();

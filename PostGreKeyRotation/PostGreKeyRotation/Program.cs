@@ -1,10 +1,7 @@
-// Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
-
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace PostgreKeyRotation
+namespace PostGreKeyRotation
 {
     public class Program
     {

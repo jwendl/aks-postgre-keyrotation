@@ -3,9 +3,6 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
-# // Copyright (c) Microsoft Corporation.
-# // Licensed under the MIT license.
-
 trigger:
 - none
 
@@ -38,7 +35,7 @@ steps:
     inputs:
       command: 'build'
       projects: '**/*.csproj'
-      workingDirectory: '$(System.DefaultWorkingDirectory)/PostgreKeyRotation'
+      workingDirectory: '$(System.DefaultWorkingDirectory)/PostGreKeyRotation'
       arguments: '--configuration $(BuildConfiguration)'
 
   - task: DotNetCoreCLI@2
@@ -46,14 +43,14 @@ steps:
     inputs:
       command: publish
       publishWebProjects: True
-      workingDirectory: '$(System.DefaultWorkingDirectory)/PostgreKeyRotation'
-      arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)/PostgreKeyRotation/Deployment/BuildOutput'
+      workingDirectory: '$(System.DefaultWorkingDirectory)/PostGreKeyRotation'
+      arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)/PostGreKeyRotation/Deployment/BuildOutput'
       zipAfterPublish: True
 
   - task: PublishBuildArtifacts@1
     inputs:
       pathtoPublish: '$(Build.ArtifactStagingDirectory)'
-      artifactName: 'PostgreKeyRotation'
+      artifactName: 'PostGreKeyRotation'
 
   - task: Kubernetes@1
     inputs:
@@ -71,7 +68,7 @@ steps:
     inputs:
       provider: 'azurerm'
       command: 'init'
-      workingDirectory: '$(System.DefaultWorkingDirectory)/PostgreKeyRotation/Deployment/terraform'
+      workingDirectory: '$(System.DefaultWorkingDirectory)/PostGreKeyRotation/Deployment/terraform'
       backendServiceArm: '<service-principal-name>'
       backendAzureRmResourceGroupName: 'KeyRotateState'
       backendAzureRmStorageAccountName: 'jwtfkrstatestore'
@@ -83,7 +80,7 @@ steps:
     inputs:
       provider: 'azurerm'
       command: 'plan'
-      workingDirectory: '$(System.DefaultWorkingDirectory)/PostgreKeyRotation/Deployment/terraform'
+      workingDirectory: '$(System.DefaultWorkingDirectory)/PostGreKeyRotation/Deployment/terraform'
       commandOptions: '-var "subscription_id=<subscription-id>" -var "key_vault_resource_group_name=KeyRotation" -var "key_vault_app_registration_name=jwrotateapp" -var "key_vault_location=westus2" -var "key_vault_name=jwrotatekeyvault" -var "key_vault_tenant_id=<tenant-id>" -var "key_vault_tfsp_tenant_id=<tenant-id>" -var "key_vault_tfsp_object_id=<object-id>" -var "key_vault_akssp_tenant_id=<tenant-id>" -var "key_vault_akssp_object_id=<object-id>" -var "key_vault_azdosp_tenant_id=<tenant-id>" -var "key_vault_azdosp_object_id=<object-id>" -var "key_vault_app_tenant_id=<tenant-id>" -var "key_vault_app_object_id=<object-id>" -var "ag_gateway_name=jwrotateag" -var "container_registry_name=jwrotateacr" -var "sp_client_id=<client-id>" -var "sp_client_secret=<client-secret>" -var "cluster_name=jwrotatecluster" -var "dns_prefix=jwrotatecluster" -var "publicip_domainname=jwrotateapp" -var "agent_count=1" -var "postgre_server_name=jwpostgreserver" -var "postgre_db_name=jwpostgredb" --out key-rotate'
       environmentServiceNameAzureRM: '<service-principal-name>'
 
@@ -92,15 +89,15 @@ steps:
     inputs:
       provider: 'azurerm'
       command: 'apply'
-      workingDirectory: '$(System.DefaultWorkingDirectory)/PostgreKeyRotation/Deployment/terraform'
+      workingDirectory: '$(System.DefaultWorkingDirectory)/PostGreKeyRotation/Deployment/terraform'
       commandOptions: 'key-rotate'
       environmentServiceNameAzureRM: '<service-principal-name>'
 
   - task: Bash@3
-    displayName: Apply Postgre DDL
+    displayName: Apply PostGre DDL
     inputs:
-      filePath: '$(System.DefaultWorkingDirectory)/PostgreKeyRotation/Deployment/scripts/deploy-ddl.sh'
-      workingDirectory: '$(System.DefaultWorkingDirectory)/PostgreKeyRotation/Deployment/scripts'
+      filePath: '$(System.DefaultWorkingDirectory)/PostGreKeyRotation/Deployment/scripts/deploy-ddl.sh'
+      workingDirectory: '$(System.DefaultWorkingDirectory)/PostGreKeyRotation/Deployment/scripts'
       arguments: '"<database-server-name>" "<database-name>" "<database-admin-role>"'
 
   - task: AzureCLI@2
@@ -108,15 +105,15 @@ steps:
       azureSubscription: '<service-principal-name>'
       scriptType: 'bash'
       scriptLocation: 'scriptPath'
-      scriptPath: '$(System.DefaultWorkingDirectory)/PostgreKeyRotation/Deployment/scripts/set-keyvault-password.sh'
-      workingDirectory: '$(System.DefaultWorkingDirectory)/PostgreKeyRotation/Deployment/scripts'
+      scriptPath: '$(System.DefaultWorkingDirectory)/PostGreKeyRotation/Deployment/scripts/set-keyvault-password.sh'
+      workingDirectory: '$(System.DefaultWorkingDirectory)/PostGreKeyRotation/Deployment/scripts'
 
   - task: Docker@2
     displayName: "Build and Push Docker Image"
     inputs:
       command: buildAndPush
       repository: $(imageName)
-      dockerfile: 'PostgreKeyRotation/PostgreKeyRotation/Dockerfile'
+      dockerfile: 'PostGreKeyRotation/PostGreKeyRotation/Dockerfile'
       buildContext : $(Build.Repository.LocalPath)
       containerRegistry: 'Container Registry'
 
@@ -137,7 +134,7 @@ steps:
         helm repo update
         aksfqdn="$(az aks show --resource-group KeyRotation --name jwrotatecluster --query fqdn --output tsv)"
         helm upgrade --install ingress-azure --set verbosityLevel=3 --set appgw.subscriptionId=<subscription-id> --set appgw.resourceGroup=KeyRotation --set appgw.name=jwrotateag --set appgw.usePrivateIP=false --set appgw.shared=false --set armAuth.type=servicePrincipal --set armAuth.secretJSON="<auth-secret-string>" --set aksClusterConfiguration.apiServerAddress=$aksfqdn application-gateway-kubernetes-ingress/ingress-azure
-      workingDirectory: '$(System.DefaultWorkingDirectory)/PostgreKeyRotation/Deployment/helm'
+      workingDirectory: '$(System.DefaultWorkingDirectory)/PostGreKeyRotation/Deployment/helm'
 
   - task: AzureCLI@2
     displayName: 'Deploy Prod'
@@ -146,14 +143,14 @@ steps:
       azureSubscription: '<service-principal-name>'
       scriptType: 'bash'
       scriptLocation: 'scriptPath'
-      scriptPath: '$(System.DefaultWorkingDirectory)/PostgreKeyRotation/Deployment/scripts/pg-deploy-production.sh'
-      workingDirectory: '$(System.DefaultWorkingDirectory)/PostgreKeyRotation/Deployment/scripts'
+      scriptPath: '$(System.DefaultWorkingDirectory)/PostGreKeyRotation/Deployment/scripts/pg-deploy-production.sh'
+      workingDirectory: '$(System.DefaultWorkingDirectory)/PostGreKeyRotation/Deployment/scripts'
       arguments: 'pgapprolegreen $(Build.BuildId) <database-server-name> <database-name>'
 
   - task: Bash@3
     displayName: 'Set buildTag Variable'
     inputs:
       failOnStderr: true
-      filePath: '$(System.DefaultWorkingDirectory)/PostgreKeyRotation/Deployment/scripts/ci-set-buildtag.sh'
-      workingDirectory: '$(System.DefaultWorkingDirectory)/PostgreKeyRotation/Deployment/scripts'
+      filePath: '$(System.DefaultWorkingDirectory)/PostGreKeyRotation/Deployment/scripts/ci-set-buildtag.sh'
+      workingDirectory: '$(System.DefaultWorkingDirectory)/PostGreKeyRotation/Deployment/scripts'
       arguments: '"$(Build.BuildId)" "$(System.TeamFoundationCollectionUri)$(System.TeamProject)" "$(System.AccessToken)"'

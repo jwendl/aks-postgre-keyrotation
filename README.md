@@ -1,5 +1,9 @@
 # Secret Rotation
 
+## Out dated
+
+This repository has been moved under the Microsoft org please check it out there: <https://github.com/microsoft/aks-postgre-keyrotation>
+
 ## General
 
 This example project demonstrates how to handle secret rotation from a web application running in Azure Kubernetes Service, stores the secrets into KeyVault and then uses those secrets to access Azure SQL PostGre instance. 
